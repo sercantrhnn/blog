@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\News;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,7 +18,19 @@ class NewsType extends AbstractType
         $builder
             ->add('title', TextType::class, [ 'label' => 'Başlık', 'required' => false ])
             ->add('description', TextType::class, [ 'label' => 'Kısa Açıklama', 'required' => false ])
-            ->add('category', TextType::class, [ 'label' => 'Kategori', 'required' => false ])
+            ->add('category', ChoiceType::class, [
+                'label' => 'Kategori',
+                'required' => false,
+                'placeholder' => '— Seçiniz —',
+                'choices' => [
+                    'Hammadde & Kimyasallar' => 'Hammadde & Kimyasallar',
+                    'Maden & Mineraller' => 'Maden & Mineraller',
+                    'Metal & Alaşımlar' => 'Metal & Alaşımlar',
+                    'Hizmet & Ofis & Vasıta' => 'Hizmet & Ofis & Vasıta',
+                    'Sanayi Makineleri & Üretim Hattı' => 'Sanayi Makineleri & Üretim Hattı',
+                    'Tarım & Gıda & Hayvancılık Makineleri' => 'Tarım & Gıda & Hayvancılık Makineleri',
+                ],
+            ])
             ->add('imageFile', FileType::class, [ 'label' => 'Görsel (JPG/PNG)', 'mapped' => false, 'required' => false ])
             ->add('post', TextareaType::class, [ 'label' => 'İçerik', 'required' => false, 'attr' => ['rows' => 10] ])
         ;

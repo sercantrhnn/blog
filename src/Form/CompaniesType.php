@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Companies;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,7 +18,19 @@ class CompaniesType extends AbstractType
         $builder
             ->add('name', TextType::class, [ 'label' => 'Firma Adı', 'required' => false ])
             ->add('description', TextareaType::class, [ 'label' => 'Açıklama', 'required' => false, 'attr' => ['rows' => 4] ])
-            ->add('category', TextType::class, [ 'label' => 'Kategori', 'required' => false ])
+            ->add('category', ChoiceType::class, [
+                'label' => 'Kategori',
+                'required' => false,
+                'placeholder' => '— Seçiniz —',
+                'choices' => [
+                    'Hammadde & Kimyasallar' => 'Hammadde & Kimyasallar',
+                    'Maden & Mineraller' => 'Maden & Mineraller',
+                    'Metal & Alaşımlar' => 'Metal & Alaşımlar',
+                    'Hizmet & Ofis & Vasıta' => 'Hizmet & Ofis & Vasıta',
+                    'Sanayi Makineleri & Üretim Hattı' => 'Sanayi Makineleri & Üretim Hattı',
+                    'Tarım & Gıda & Hayvancılık Makineleri' => 'Tarım & Gıda & Hayvancılık Makineleri',
+                ],
+            ])
             ->add('imageFile', FileType::class, [ 'label' => 'Logo (JPG/PNG)', 'mapped' => false, 'required' => false ])
         ;
     }

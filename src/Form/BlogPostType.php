@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\BlogPost;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -25,10 +26,18 @@ class BlogPostType extends AbstractType
                 'required' => false,
                 'attr' => ['placeholder' => 'Kısa açıklama']
             ])
-            ->add('category', TextType::class, [
+            ->add('category', ChoiceType::class, [
                 'label' => 'Kategori',
                 'required' => false,
-                'attr' => ['placeholder' => 'Örn: Teknoloji']
+                'placeholder' => '— Seçiniz —',
+                'choices' => [
+                    'Hammadde & Kimyasallar' => 'Hammadde & Kimyasallar',
+                    'Maden & Mineraller' => 'Maden & Mineraller',
+                    'Metal & Alaşımlar' => 'Metal & Alaşımlar',
+                    'Hizmet & Ofis & Vasıta' => 'Hizmet & Ofis & Vasıta',
+                    'Sanayi Makineleri & Üretim Hattı' => 'Sanayi Makineleri & Üretim Hattı',
+                    'Tarım & Gıda & Hayvancılık Makineleri' => 'Tarım & Gıda & Hayvancılık Makineleri',
+                ],
             ])
             ->add('imageFile', FileType::class, [
                 'label' => 'Görsel (JPG/PNG)',
