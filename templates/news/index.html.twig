@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Tüm Haberler{% endblock %}
+{% block title %}Haberler{% endblock %}
 
 {% block stylesheets %}
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -11,28 +11,35 @@
 
 {% block body %}
 <div class="flex flex-col min-h-screen">
-  <header class="bg-background-light border-b border-gray-200">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
+  <header class="flex items-center justify-between whitespace-nowrap border-b border-gray-200 px-10 py-4">
         <div class="flex items-center gap-8">
           <div class="flex items-center gap-2 text-primary">
             <svg class="h-8 w-8 text-red-600" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7l10 5 10-5-10-5zm0 7.5L4 14l8 4.5 8-4.5-8-4.5zM2 17l10 5 10-5-10-5-10 5z"></path></svg>
             <h1 class="text-2xl font-bold text-gray-900">Sanayi Birliği</h1>
           </div>
           <nav class="hidden md:flex items-center gap-6">
-            <a class="text-sm font-medium text-gray-600 hover:text-primary transition-colors" href="{{ path('home_index') }}">Home</a>
-            <a class="text-sm font-medium text-primary" href="{{ path('public_news_index') }}">News</a>
-            <a class="text-sm font-medium text-gray-600 hover:text-primary transition-colors" href="{{ path('public_blog_index') }}">Blog</a>
+            <a class="text-sm font-medium text-gray-600 hover:text-primary transition-colors" href="{{ path('home_index') }}">Ana Sayfa</a>
+            <a class="text-sm font-medium text-primary" href="{{ path('public_news_index') }}">Haberler</a>
+            <a class="text-sm font-medium text-gray-600 hover:text-primary transition-colors" href="{{ path('public_blog_index') }}">Bloglar</a>
+            <a class="text-sm font-medium text-gray-600 hover:text-primary transition-colors" href="{{ path('public_companies_index') }}">Firmalar</a>
           </nav>
         </div>
-      </div>
-    </div>
+        <div class="flex items-center gap-4">
+          <div class="relative hidden sm:block">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+            <input class="form-input w-48 rounded-lg border-gray-200 bg-white/50 pl-10 pr-4 py-2 text-sm placeholder:text-gray-400 focus:border-primary focus:ring-primary" placeholder="Haberlerde ara" value="" />
+          </div>
+        </div>
   </header>
 
   <main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="max-w-7xl mx-auto">
-      <div class="mb-8">
-        <h2 class="text-4xl font-bold text-gray-900">All News</h2>
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+        <h2 class="text-4xl font-bold text-gray-900">Haberler</h2>
+        <div class="relative sm:hidden w-full">
+          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+          <input class="form-input w-full rounded-lg border-gray-200 bg-white/50 pl-10 pr-4 py-3 text-sm placeholder:text-gray-400 focus:border-primary focus:ring-primary" placeholder="Haberlerde ara" value="" />
+        </div>
       </div>
 
       <div class="mb-6 flex flex-wrap gap-2">
