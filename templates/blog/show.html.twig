@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ post.title }} | Sanayi Birliği{% endblock %}
+
+{% block stylesheets %}
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+{% endblock %}
+
+{% block body %}
+<div class="min-h-screen">
+  <header class="border-b border-slate-200">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-8">
+          <div class="flex items-center gap-2 text-slate-900">
+            <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M24 4H6V17.3333V30.6667H24V44H42V30.6667V17.3333H24V4Z" fill="currentColor" fill-rule="evenodd"></path></svg>
+            <h2 class="text-xl font-bold">Sanayi Birliği</h2>
+          </div>
+          <nav class="hidden md:flex items-center gap-8">
+            <a class="text-sm font-medium text-slate-600 hover:text-red-600" href="{{ path('home_index') }}">Home</a>
+            <a class="text-sm font-medium text-slate-600 hover:text-red-600" href="{{ path('public_blog_index') }}">Blog</a>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="max-w-4xl mx-auto">
+      <div class="flex items-center text-sm text-slate-500 mb-4">
+        <a class="hover:text-red-600" href="{{ path('public_blog_index') }}">Blog</a>
+        <span class="mx-2">/</span>
+        <span class="text-slate-700">{{ post.title }}</span>
+      </div>
+
+      <h1 class="text-4xl lg:text-5xl font-bold text-slate-900 mb-4">{{ post.title }}</h1>
+      {% if post.category %}<p class="text-sm text-slate-500 mb-2">Kategori: {{ post.category }}</p>{% endif %}
+      {% if post.filePath %}
+      <div class="w-full rounded-lg overflow-hidden mb-8">
+        <img src="{{ asset(post.filePath) }}" alt="{{ post.title }}" class="w-full h-auto object-cover" />
+      </div>
+      {% endif %}
+
+      <article class="prose prose-lg max-w-none text-slate-700">
+        {{ post.post|raw }}
+      </article>
+
+      {% if related|length > 0 %}
+      <div class="mt-16">
+        <h2 class="text-2xl font-bold text-slate-900 mb-6">İlgili Yazılar</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+          {% for r in related %}
+          <div class="flex flex-col rounded-lg overflow-hidden bg-white border border-slate-200">
+            <div class="w-full h-48 bg-center bg-cover" style="background-image:url('{{ r.filePath ? asset(r.filePath) : '' }}');"></div>
+            <div class="p-6 flex flex-col flex-grow">
+              {% if r.category %}<p class="text-sm text-red-600 font-semibold mb-1">{{ r.category }}</p>{% endif %}
+              <h3 class="text-xl font-bold text-slate-900 mb-2">{{ r.title }}</h3>
+              <p class="text-slate-600 flex-grow mb-4">{{ r.description }}</p>
+              <a class="inline-block bg-red-600 text-white font-semibold py-2 px-4 rounded text-center hover:bg-red-700 transition-colors" href="{{ path('public_blog_show', {id: r.id}) }}">Devamını Oku</a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </main>
+</div>
+{% endblock %}
+
+

@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tüm Blog Yazıları{% endblock %}
+
+{% block stylesheets %}
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <script>
+    tailwind = window.tailwind || {}; tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#d50000','background-light':'#f6f7f8','background-dark':'#101c22'}, fontFamily: { display: ['Newsreader'] }, borderRadius: { DEFAULT: '0.25rem', lg:'0.5rem', xl:'0.75rem', full:'9999px' } } } };
+  </script>
+{% endblock %}
+
+{% block body %}
+<div class="relative flex h-auto min-h-screen w-full flex-col">
+  <div class="layout-container flex h-full grow flex-col">
+    <header class="flex items-center justify-between whitespace-nowrap border-b border-gray-200 px-10 py-4">
+      <div class="flex items-center gap-10">
+        <div class="flex items-center gap-3 text-gray-900">
+          <div class="size-6 text-primary">
+            <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M4 42.4379C4 42.4379 14.0962 36.0744 24 41.1692C35.0664 46.8624 44 42.2078 44 42.2078L44 7.01134C44 7.01134 35.068 11.6577 24.0031 5.96913C14.0971 0.876274 4 7.27094 4 7.27094L4 42.4379Z" fill="currentColor"></path></svg>
+          </div>
+          <h2 class="text-xl font-bold">Sanayi Birliği</h2>
+        </div>
+        <nav class="flex items-center gap-8">
+          <a class="text-sm font-medium text-gray-600 hover:text-primary transition-colors" href="{{ path('home_index') }}">Home</a>
+          <a class="text-sm font-medium text-gray-600 hover:text-primary transition-colors" href="#">News</a>
+          <a class="text-sm font-medium text-gray-600 hover:text-primary transition-colors" href="#">Listings</a>
+        </nav>
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="relative hidden sm:block">
+          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+          <input class="form-input w-48 rounded-lg border-gray-200 bg-white/50 pl-10 pr-4 py-2 text-sm placeholder:text-gray-400 focus:border-primary focus:ring-primary" placeholder="Search" value="" />
+        </div>
+      </div>
+    </header>
+
+    <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="flex flex-col gap-8">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <h1 class="text-4xl font-bold">All Blog Posts</h1>
+          <div class="relative sm:hidden w-full">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+            <input class="form-input w-full rounded-lg border-gray-200 bg-white/50 pl-10 pr-4 py-3 text-sm placeholder:text-gray-400 focus:border-primary focus:ring-primary" placeholder="Search blog posts" value="" />
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <a href="{{ path('public_blog_index') }}" class="flex items-center justify-center gap-x-2 rounded-lg {{ not category ? 'bg-primary/10 text-primary' : 'bg-gray-200/50 text-gray-700' }} px-4 py-2 text-sm font-medium hover:bg-primary/20 transition-colors">Tümü</a>
+          {% for cat in categories %}
+            <a href="{{ path('public_blog_index', {category: cat}) }}" class="flex items-center justify-center gap-x-2 rounded-lg px-4 py-2 text-sm font-medium {{ category == cat ? 'bg-primary/10 text-primary' : 'bg-gray-200/50 text-gray-700 hover:bg-gray-200' }} transition-colors">
+              <span>{{ cat }}</span>
+              <span class="material-symbols-outlined text-lg">expand_more</span>
+            </a>
+          {% endfor %}
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {% for p in posts %}
+          <a class="flex flex-col gap-4 group" href="{{ path('public_blog_show', {id: p.id}) }}">
+            <div class="w-full aspect-video bg-cover bg-center rounded-lg overflow-hidden">
+              {% if p.filePath %}
+              <img alt="{{ p.title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src="{{ asset(p.filePath) }}" />
+              {% else %}
+              <div class="w-full h-full bg-gray-200"></div>
+              {% endif %}
+            </div>
+            <div class="flex flex-col gap-1">
+              <p class="text-lg font-bold group-hover:text-primary transition-colors">{{ p.title }}</p>
+              <p class="text-sm text-gray-600">{{ p.description }}</p>
+            </div>
+          </a>
+          {% else %}
+            <div class="col-span-4 text-gray-500">Kayıt bulunamadı.</div>
+          {% endfor %}
+        </div>
+
+        {% if totalPages > 1 %}
+        <div class="flex items-center justify-center gap-2 pt-8">
+          <a class="flex size-10 items-center justify-center rounded-lg text-gray-600 hover:bg-primary/10 hover:text-primary transition-colors" href="{{ path('public_blog_index', {page: page > 1 ? page - 1 : 1, category: category}) }}"><span class="material-symbols-outlined">chevron_left</span></a>
+          <span class="flex size-10 items-center justify-center rounded-lg text-sm font-bold bg-primary text-white">{{ page }}</span>
+          <a class="flex size-10 items-center justify-center rounded-lg text-gray-600 hover:bg-primary/10 hover:text-primary transition-colors" href="{{ path('public_blog_index', {page: page < totalPages ? page + 1 : totalPages, category: category}) }}"><span class="material-symbols-outlined">chevron_right</span></a>
+        </div>
+        {% endif %}
+      </div>
+    </main>
+  </div>
+</div>
+{% endblock %}
+
+

@@ -1,0 +1,50 @@
+<?php
+
+namespace App\Controller;
+
+use App\Repository\CompaniesRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
+
+class CompaniesPublicController extends AbstractController
+{
+    #[Route('/companies', name: 'public_companies_index', methods: ['GET'])]
+    public function index(Request $request, CompaniesRepository $companiesRepository): Response
+    {
+        $page = max(1, (int) $request->query->get('page', 1));
+        $perPage = 12;
+        $category = $request->query->get('category');
+
+        $criteria = [];
+        if ($category) {
+            $criteria['category'] = $category;
+        }
+
+        $total = $companiesRepository->count($criteria);
+        $totalPages = max(1, (int) ceil($total / $perPage));
+        if ($page > $totalPages) { $page = $totalPages; }
+        $offset = ($page - 1) * $perPage;
+        $items = $companiesRepository->findBy($criteria, ['id' => 'DESC'], $perPage, $offset);
+
+        $categories = [
+            'Hammadde & Kimyasallar',
+            'Maden & Mineraller',
+            'Metal & Alaşımlar',
+            'Hizmet & Ofis & Vasıta',
+            'Sanayi Makineleri & Üretim Hattı',
+            'Tarım & Gıda & Hayvancılık Makineleri',
+        ];
+
+        return $this->render('companies/index.html.twig', [
+            'items' => $items,
+            'page' => $page,
+            'totalPages' => $totalPages,
+            'category' => $category,
+            'categories' => $categories,
+        ]);
+    }
+}
+
+
