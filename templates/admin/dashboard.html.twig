@@ -9,11 +9,34 @@
         </div>
     </div>
     <div class="cards">
-        <div class="card span-12">
-            <div style="font-weight: 600; margin-bottom: 8px;">Hızlı Aksiyonlar</div>
-            <div class="toolbar">
-                <a class="btn" href="{{ path('admin_blog_new') }}">Yeni Blog Yazısı</a>
-                <a class="btn secondary" href="{{ path('admin_blog_index') }}">Blog Listesi</a>
+        <div class="card span-12" style="display:grid; grid-template-columns: repeat(12, 1fr); gap: 16px;">
+            <div class="card" style="grid-column: span 3;">
+                <div style="font-weight:600; margin-bottom:8px;">Blog</div>
+                <div class="toolbar">
+                    <a class="btn" href="{{ path('admin_blog_new') }}">Yeni</a>
+                    <a class="btn secondary" href="{{ path('admin_blog_index') }}">Liste</a>
+                </div>
+            </div>
+            <div class="card" style="grid-column: span 3;">
+                <div style="font-weight:600; margin-bottom:8px;">Haberler</div>
+                <div class="toolbar">
+                    <a class="btn" href="{{ path('admin_news_new') }}">Yeni</a>
+                    <a class="btn secondary" href="{{ path('admin_news_index') }}">Liste</a>
+                </div>
+            </div>
+            <div class="card" style="grid-column: span 3;">
+                <div style="font-weight:600; margin-bottom:8px;">Firmalar</div>
+                <div class="toolbar">
+                    <a class="btn" href="{{ path('admin_companies_new') }}">Yeni</a>
+                    <a class="btn secondary" href="{{ path('admin_companies_index') }}">Liste</a>
+                </div>
+            </div>
+            <div class="card" style="grid-column: span 3;">
+                <div style="font-weight:600; margin-bottom:8px;">Kullanıcılar</div>
+                <div class="toolbar">
+                    <a class="btn" href="{{ path('admin_users_new') }}">Yeni</a>
+                    <a class="btn secondary" href="{{ path('admin_users_index') }}">Liste</a>
+                </div>
             </div>
         </div>
     </div>

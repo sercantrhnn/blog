@@ -17,6 +17,7 @@ class NewsType extends AbstractType
         $builder
             ->add('title', TextType::class, [ 'label' => 'Başlık', 'required' => false ])
             ->add('description', TextType::class, [ 'label' => 'Kısa Açıklama', 'required' => false ])
+            ->add('category', TextType::class, [ 'label' => 'Kategori', 'required' => false ])
             ->add('imageFile', FileType::class, [ 'label' => 'Görsel (JPG/PNG)', 'mapped' => false, 'required' => false ])
             ->add('post', TextareaType::class, [ 'label' => 'İçerik', 'required' => false, 'attr' => ['rows' => 10] ])
         ;

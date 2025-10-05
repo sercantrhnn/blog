@@ -25,6 +25,11 @@ class BlogPostType extends AbstractType
                 'required' => false,
                 'attr' => ['placeholder' => 'Kısa açıklama']
             ])
+            ->add('category', TextType::class, [
+                'label' => 'Kategori',
+                'required' => false,
+                'attr' => ['placeholder' => 'Örn: Teknoloji']
+            ])
             ->add('imageFile', FileType::class, [
                 'label' => 'Görsel (JPG/PNG)',
                 'mapped' => false,

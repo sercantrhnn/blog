@@ -26,6 +26,9 @@ class BlogPost
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $post = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $category = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +78,18 @@ class BlogPost
     public function setPost(?string $post): static
     {
         $this->post = $post;
+
+        return $this;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?string $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }
