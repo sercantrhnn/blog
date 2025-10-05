@@ -1,0 +1,42 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block admin_content %}
+  <div class="admin-header">
+    <div>
+        <div class="muted" style="margin-bottom:6px">Haberler</div>
+        <div style="display:flex; align-items:center; gap:8px;">
+            <a class="muted" href="{{ path('admin_news_index') }}" style="text-decoration:none;">Haberler</a>
+            <span class="muted">/</span>
+            <strong>Yeni</strong>
+        </div>
+    </div>
+    <a class="btn flat" href="{{ path('admin_news_index') }}">Geri</a>
+  </div>
+  <div class="card">
+    {{ form_start(form, { 'attr': { 'enctype': 'multipart/form-data' } }) }}
+      <div class="field">
+        {{ form_label(form.title) }}
+        {{ form_widget(form.title) }}
+        {{ form_errors(form.title) }}
+      </div>
+      <div class="field">
+        {{ form_label(form.description) }}
+        {{ form_widget(form.description) }}
+        {{ form_errors(form.description) }}
+      </div>
+      <div class="field">
+        {{ form_label(form.imageFile) }}
+        {{ form_widget(form.imageFile) }}
+        {{ form_errors(form.imageFile) }}
+      </div>
+      <div class="field">
+        {{ form_label(form.post) }}
+        {{ form_widget(form.post) }}
+        {{ form_errors(form.post) }}
+      </div>
+      <button class="btn" type="submit">Kaydet</button>
+    {{ form_end(form) }}
+  </div>
+{% endblock %}
+
+

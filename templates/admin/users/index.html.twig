@@ -1,0 +1,72 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block admin_content %}
+<div class="admin-header">
+    <div>
+        <div class="muted" style="margin-bottom:6px">Kullanıcılar</div>
+        <div style="display:flex; align-items:center; gap:8px;">
+            <a class="muted" href="{{ path('admin_dashboard') }}" style="text-decoration:none;">Dashboard</a>
+            <span class="muted">/</span>
+            <strong>Kullanıcılar</strong>
+        </div>
+    </div>
+    <div class="toolbar">
+        <a class="btn flat" href="{{ path('admin_dashboard') }}">Dashboard</a>
+    </div>
+  </div>
+
+  <div class="toolbar" style="margin: 0 0 12px 0;">
+      <a class="btn" href="{{ path('admin_users_new') }}">Yeni Ekle</a>
+  </div>
+
+  {% for type, messages in app.flashes %}
+    {% for message in messages %}
+      <div class="alert {{ type }}">{{ message }}</div>
+    {% endfor %}
+  {% endfor %}
+
+  <div class="card span-12">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Ad Soyad</th>
+          <th>E-posta</th>
+          <th>Roller</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for u in items %}
+        <tr>
+          <td>{{ u.id }}</td>
+          <td>{{ u.name }} {{ u.surname }}</td>
+          <td>{{ u.email }}</td>
+          <td>
+            {% for r in u.roles ?? [] %}
+              <span class="badge">{{ r }}</span>
+            {% else %}
+              <span class="muted">-</span>
+            {% endfor %}
+          </td>
+        </tr>
+      {% else %}
+        <tr>
+          <td colspan="4" class="muted">Henüz kayıt yok.</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% if totalPages > 1 %}
+  <div class="toolbar" style="justify-content: flex-end; margin-top: 12px;">
+      <a class="btn flat" href="{{ path('admin_users_index', {page: 1}) }}" title="İlk">«</a>
+      <a class="btn flat" href="{{ path('admin_users_index', {page: page > 1 ? page - 1 : 1}) }}" title="Önceki">‹</a>
+      <span class="badge">Sayfa {{ page }} / {{ totalPages }}</span>
+      <a class="btn flat" href="{{ path('admin_users_index', {page: page < totalPages ? page + 1 : totalPages}) }}" title="Sonraki">›</a>
+      <a class="btn flat" href="{{ path('admin_users_index', {page: totalPages}) }}" title="Son">»</a>
+  </div>
+  {% endif %}
+{% endblock %}
+
+

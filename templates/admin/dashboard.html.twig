@@ -1,0 +1,22 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block admin_content %}
+    <div class="admin-header">
+        <h2 style="margin:0">Yönetim Paneli</h2>
+        <div class="toolbar">
+            <a class="btn" href="{{ path('admin_blog_new') }}">Yeni Blog Yazısı</a>
+            <a class="btn flat" href="{{ path('admin_blog_index') }}">Blogları Yönet</a>
+        </div>
+    </div>
+    <div class="cards">
+        <div class="card span-12">
+            <div style="font-weight: 600; margin-bottom: 8px;">Hızlı Aksiyonlar</div>
+            <div class="toolbar">
+                <a class="btn" href="{{ path('admin_blog_new') }}">Yeni Blog Yazısı</a>
+                <a class="btn secondary" href="{{ path('admin_blog_index') }}">Blog Listesi</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

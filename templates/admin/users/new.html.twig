@@ -1,0 +1,43 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block admin_content %}
+  <div class="admin-header">
+    <div>
+        <div class="muted" style="margin-bottom:6px">Kullanıcılar</div>
+        <div style="display:flex; align-items:center; gap:8px;">
+            <a class="muted" href="{{ path('admin_users_index') }}" style="text-decoration:none;">Kullanıcılar</a>
+            <span class="muted">/</span>
+            <strong>Yeni</strong>
+        </div>
+    </div>
+    <a class="btn flat" href="{{ path('admin_users_index') }}">Geri</a>
+  </div>
+  <div class="card">
+    {{ form_start(form) }}
+      <div class="field">
+        {{ form_label(form.name) }}
+        {{ form_widget(form.name) }}
+        {{ form_errors(form.name) }}
+      </div>
+      <div class="field">
+        {{ form_label(form.surname) }}
+        {{ form_widget(form.surname) }}
+        {{ form_errors(form.surname) }}
+      </div>
+      <div class="field">
+        {{ form_label(form.email) }}
+        {{ form_widget(form.email) }}
+        {{ form_errors(form.email) }}
+      </div>
+      <div class="field">
+        {{ form_label(form.plainPassword) }}
+        {{ form_widget(form.plainPassword) }}
+        {{ form_errors(form.plainPassword) }}
+      </div>
+      <div class="muted">Rol otomatik olarak <span class="badge">ROLE_ADMIN</span> atanır.</div>
+      <button class="btn" type="submit">Kaydet</button>
+    {{ form_end(form) }}
+  </div>
+{% endblock %}
+
+

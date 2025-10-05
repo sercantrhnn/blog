@@ -1,0 +1,35 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block admin_content %}
+  <div class="admin-header">
+    <h2>Yeni Blog Yazısı</h2>
+    <a class="btn secondary" href="{{ path('admin_blog_index') }}">Geri</a>
+  </div>
+  <div class="card">
+    {{ form_start(form, { 'attr': { 'enctype': 'multipart/form-data' } }) }}
+      <div class="field">
+        {{ form_label(form.title) }}
+        {{ form_widget(form.title) }}
+        {{ form_errors(form.title) }}
+      </div>
+      <div class="field">
+        {{ form_label(form.description) }}
+        {{ form_widget(form.description) }}
+        {{ form_errors(form.description) }}
+      </div>
+      <div class="field">
+        {{ form_label(form.imageFile) }}
+        {{ form_widget(form.imageFile) }}
+        {{ form_errors(form.imageFile) }}
+      </div>
+      <div class="field">
+        {{ form_label(form.post) }}
+        {{ form_widget(form.post) }}
+        {{ form_errors(form.post) }}
+      </div>
+      <button class="btn" type="submit">Kaydet</button>
+    {{ form_end(form) }}
+  </div>
+{% endblock %}
+
+

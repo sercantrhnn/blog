@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin Panel{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        :root {
+            --bg:#f6f8fb; --panel:#ffffff; --text:#0f172a; --muted:#64748b; --brand:#2563eb; --brand-2:#22c55e; --border:#e5e7eb;
+            --shadow:0 10px 25px rgba(2,6,23,.06), 0 2px 8px rgba(2,6,23,.04);
+        }
+        body { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial; margin: 0; background: var(--bg); color: var(--text); }
+        .admin-layout { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; }
+        .admin-sidebar { background: var(--panel); border-right: 1px solid var(--border); padding: 22px; position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; gap: 12px; }
+        .admin-sidebar h1 { font-size: 18px; margin: 0 0 16px 0; color: var(--text); letter-spacing: .3px; }
+        .admin-nav a { display: flex; align-items: center; gap: 10px; color: var(--muted); text-decoration: none; padding: 10px 12px; border-radius: 10px; }
+        .admin-nav a.active, .admin-nav a:hover { color: var(--text); background: #f1f5f9; }
+        .admin-content { padding: 28px; min-width: 0; overflow-x: hidden; }
+        .admin-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; background: var(--brand); color: #fff; padding: 10px 14px; border-radius: 10px; text-decoration: none; font-weight: 600; box-shadow: var(--shadow); border: 1px solid #1d4ed8; }
+        .btn.secondary { background: #0ea5e9; border-color: #0284c7; }
+        .btn.danger { background: #ef4444; border-color: #dc2626; }
+        .btn.flat { background: transparent; color: var(--text); border: 1px solid var(--border); box-shadow: none; }
+        .toolbar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .toolbar .search { flex: 1 1 280px; display: flex; align-items: center; gap: 10px; background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 8px 12px; box-shadow: var(--shadow); }
+        .toolbar .search input { border: 0; outline: 0; width: 100%; font-size: 14px; }
+        .cards { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
+        .card { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 18px; box-shadow: var(--shadow); overflow-x: auto; }
+        .card.span-12 { grid-column: span 12; }
+        .muted { color: var(--muted); font-size: 13px; }
+        .space-y > * + * { margin-top: 12px; }
+        form.inline { display: inline; }
+        input[type="text"], input[type="email"], input[type="password"], input[type="file"], textarea { width: 100%; max-width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: 12px; background: #fff; color: var(--text); box-shadow: inset 0 1px 0 rgba(2,6,23,.02); display: block; }
+        label { display: block; font-size: 13px; color: #334155; margin-bottom: 6px; }
+        .field { margin-bottom: 16px; }
+        table { width: 100%; border-collapse: collapse; overflow: hidden; border-radius: 14px; background: #fff; }
+        thead th { background: #f8fafc; color: #334155; font-weight: 600; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1; }
+        th, td { border-bottom: 1px solid var(--border); padding: 12px 12px; text-align: left; }
+        tbody tr:hover { background: #f9fbff; }
+        .badge { display: inline-block; padding: 4px 8px; border-radius: 999px; font-size: 12px; border: 1px solid var(--border); background: #f1f5f9; color: #0f172a; }
+        .alert { padding: 12px 14px; border-radius: 12px; border: 1px solid var(--border); background: #f8fafc; }
+        .alert.success { border-color: #bbf7d0; background: #f0fdf4; color: #166534; }
+        .alert.error { border-color: #fecaca; background: #fef2f2; color: #991b1b; }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="admin-layout">
+    <aside class="admin-sidebar">
+        <h1>Admin</h1>
+        <nav class="admin-nav">
+            <a href="{{ path('admin_dashboard') }}" class="{{ app.request.attributes.get('_route') starts with 'admin_dashboard' ? 'active' }}">Dashboard</a>
+            <a href="{{ path('admin_blog_index') }}" class="{{ app.request.attributes.get('_route') starts with 'admin_blog_' ? 'active' }}">Bloglar</a>
+            <a href="{{ path('admin_news_index') }}" class="{{ app.request.attributes.get('_route') starts with 'admin_news_' ? 'active' }}">Haberler</a>
+            <a href="{{ path('admin_companies_index') }}" class="{{ app.request.attributes.get('_route') starts with 'admin_companies_' ? 'active' }}">Firmalar</a>
+            <a href="{{ path('admin_users_index') }}" class="{{ app.request.attributes.get('_route') starts with 'admin_users_' ? 'active' }}">Kullanıcılar</a>
+        </nav>
+        <div class="muted" style="margin-top: 8px;">Giriş: {{ app.user ? app.user.userIdentifier : 'Misafir' }}</div>
+        {% if app.user %}
+            <a class="btn flat" href="{{ path('logout') }}">Çıkış Yap</a>
+        {% endif %}
+    </aside>
+    <main class="admin-content">
+        {% block admin_content %}{% endblock %}
+    </main>
+</div>
+{% endblock %}
+
+
