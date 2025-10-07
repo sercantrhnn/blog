@@ -12,9 +12,8 @@
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         <div class="flex items-center gap-8">
-          <div class="flex items-center gap-2 text-slate-900">
-            <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M24 4H6V17.3333V30.6667H24V44H42V30.6667V17.3333H24V4Z" fill="currentColor" fill-rule="evenodd"></path></svg>
-            <h2 class="text-xl font-bold">Sanayi Birliği</h2>
+          <div class="flex items-center text-slate-900">
+            <img src="{{ asset('logo.png') }}" alt="Sanayi Birliği" class="w-40 md:w-52 h-auto max-h-20 md:max-h-24 object-contain shrink-0" />
           </div>
           <nav class="hidden md:flex items-center gap-8">
             <a class="text-sm font-medium text-slate-600 hover:text-red-600" href="{{ path('home_index') }}">Home</a>

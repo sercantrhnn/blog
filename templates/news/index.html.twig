@@ -13,9 +13,8 @@
 <div class="flex flex-col min-h-screen">
   <header class="flex items-center justify-between whitespace-nowrap border-b border-gray-200 px-10 py-4">
         <div class="flex items-center gap-8">
-          <div class="flex items-center gap-2 text-primary">
-            <svg class="h-8 w-8 text-red-600" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7l10 5 10-5-10-5zm0 7.5L4 14l8 4.5 8-4.5-8-4.5zM2 17l10 5 10-5-10-5-10 5z"></path></svg>
-            <h1 class="text-2xl font-bold text-gray-900">Sanayi Birliği</h1>
+          <div class="flex items-center">
+            <img src="{{ asset('logo.png') }}" alt="Sanayi Birliği" class="w-40 md:w-52 h-auto max-h-20 md:max-h-24 object-contain shrink-0" />
           </div>
           <nav class="hidden md:flex items-center gap-6">
             <a class="text-sm font-medium text-gray-600 hover:text-primary transition-colors" href="{{ path('home_index') }}">Ana Sayfa</a>

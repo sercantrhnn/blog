@@ -18,11 +18,8 @@
 {% block body %}
 <div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden" x-data="{ activeSlide: 0 }">
   <header class="flex items-center justify-between whitespace-nowrap border-b border-black/10 px-10 py-4">
-    <div class="flex items-center gap-3">
-      <div class="h-6 w-6 text-primary">
-        <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M24 4H6V17.3333V30.6667H24V44H42V30.6667V17.3333H24V4Z" fill="currentColor" fill-rule="evenodd"></path></svg>
-      </div>
-      <h2 class="font-display text-xl font-bold">Sanayi Birliği</h2>
+    <div class="flex items-center">
+      <img src="{{ asset('logo.png') }}" alt="Sanayi Birliği" class="w-48 md:w-64 h-auto max-h-24 md:max-h-32 object-contain shrink-0" />
     </div>
     <nav class="flex flex-1 items-center justify-end gap-6">
       <div class="hidden md:flex items-center gap-6">
@@ -98,10 +95,7 @@
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
         <div class="space-y-4">
           <div class="flex items-center gap-3">
-            <div class="h-8 w-8 text-primary dark:text-primary">
-              <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M24 4H6V17.3333V30.6667H24V44H42V30.6667V17.3333H24V4Z" fill="currentColor" fill-rule="evenodd"></path></svg>
-            </div>
-            <h2 class="font-display text-2xl font-bold text-black dark:text-white">Sanayi Birliği</h2>
+            <img src="{{ asset('logo.png') }}" alt="Sanayi Birliği" class="w-40 md:w-52 h-auto max-h-16 md:max-h-20 object-contain" />
           </div>
           <p class="text-sm text-black/60 dark:text-white/60">The latest news, articles, and resources, sent to your inbox weekly.</p>
           <div class="flex space-x-4">
