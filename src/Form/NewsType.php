@@ -32,7 +32,15 @@ class NewsType extends AbstractType
                 ],
             ])
             ->add('imageFile', FileType::class, [ 'label' => 'Görsel (JPG/PNG)', 'mapped' => false, 'required' => false ])
-            ->add('post', TextareaType::class, [ 'label' => 'İçerik', 'required' => false, 'attr' => ['rows' => 10] ])
+            ->add('post', TextareaType::class, [
+                'label' => 'İçerik',
+                'required' => false,
+                'attr' => [
+                    'rows' => 15,
+                    'placeholder' => 'Haber içeriği',
+                    'class' => 'summernote-editor'
+                ]
+            ])
         ;
     }
 
