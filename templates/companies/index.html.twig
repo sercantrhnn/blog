@@ -4,9 +4,18 @@
 
 {% block stylesheets %}
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
   <script>
     tailwind = window.tailwind || {}; tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#d91e36','background-light':'#f6f7f8','background-dark':'#101c22'}, fontFamily: { display: ['Newsreader'] } } } };
   </script>
+  <style>
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  </style>
 {% endblock %}
 
 {% block body %}
@@ -42,19 +51,31 @@
 
     <section class="mt-12">
       <h2 class="text-2xl font-bold text-primary">Tüm Firmalar</h2>
-      <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+      <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
         {% for c in items %}
-        <div class="group relative flex items-center gap-4 rounded-lg border border-slate-200 bg-white p-4">
-          <div class="h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg bg-slate-200">
-            {% if c.filePath %}<img alt="{{ c.name }}" class="h-full w-full object-cover object-center" src="{{ asset(c.filePath) }}" />{% endif %}
+        <div class="group relative flex items-center gap-6 rounded-lg border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-lg hover:scale-[1.02]">
+          <div class="h-20 w-20 flex-shrink-0 overflow-hidden rounded-xl bg-gray-50 flex items-center justify-center p-3">
+            {% if c.filePath %}
+              <img alt="{{ c.name }}" class="h-full w-full object-contain object-center" src="{{ asset(c.filePath) }}" />
+            {% else %}
+              <span class="material-symbols-outlined text-gray-400 text-3xl">business</span>
+            {% endif %}
           </div>
-          <div>
-            <h3 class="text-base font-semibold">{{ c.name }}</h3>
-            <p class="mt-1 text-sm text-slate-500">{{ c.category }}</p>
+          <div class="flex-1 min-w-0">
+            {% if c.category %}
+              <span class="inline-block px-2 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-full mb-2">{{ c.category }}</span>
+            {% endif %}
+            <h3 class="text-lg font-semibold text-gray-900 mb-1">{{ c.name }}</h3>
+            {% if c.description %}
+              <p class="text-sm text-gray-600 leading-relaxed line-clamp-2">{{ c.description }}</p>
+            {% endif %}
           </div>
         </div>
         {% else %}
-          <div class="col-span-3 text-slate-500">Kayıt bulunamadı.</div>
+          <div class="col-span-3 text-center text-slate-500 py-12">
+            <span class="material-symbols-outlined text-4xl mb-4 block">business</span>
+            <p class="text-lg">Bu kategoride firma bulunamadı.</p>
+          </div>
         {% endfor %}
       </div>
 
