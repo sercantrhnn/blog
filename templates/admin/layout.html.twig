@@ -3,6 +3,8 @@
 {% block title %}Admin Panel{% endblock %}
 
 {% block stylesheets %}
+    <!-- Summernote CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; }
         :root {
@@ -43,6 +45,16 @@
         .alert { padding: 12px 14px; border-radius: 12px; border: 1px solid var(--border); background: #f8fafc; }
         .alert.success { border-color: #bbf7d0; background: #f0fdf4; color: #166534; }
         .alert.error { border-color: #fecaca; background: #fef2f2; color: #991b1b; }
+        
+        /* Summernote Özelleştirmeleri */
+        .note-editor { border: 1px solid var(--border) !important; border-radius: 12px !important; }
+        .note-editor .note-toolbar { background: #f8fafc !important; border-bottom: 1px solid var(--border) !important; border-radius: 12px 12px 0 0 !important; }
+        .note-editor .note-editing-area .note-editable { background: #fff !important; padding: 15px !important; min-height: 300px !important; }
+        .note-btn-group .note-btn { border: 1px solid var(--border) !important; background: #fff !important; color: var(--text) !important; }
+        .note-btn-group .note-btn:hover { background: #f1f5f9 !important; }
+        .note-btn-group .note-btn.active { background: var(--brand) !important; color: #fff !important; }
+        .note-dropdown-menu { border: 1px solid var(--border) !important; border-radius: 8px !important; box-shadow: var(--shadow) !important; }
+        .note-popover { border: 1px solid var(--border) !important; border-radius: 8px !important; box-shadow: var(--shadow) !important; }
     </style>
 {% endblock %}
 
@@ -66,6 +78,59 @@
         {% block admin_content %}{% endblock %}
     </main>
 </div>
+
+<!-- Summernote JavaScript -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/lang/summernote-tr-TR.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Summernote editörünü başlat
+    $('.summernote-editor').summernote({
+        height: 300,
+        minHeight: 300,
+        maxHeight: 600,
+        focus: false,
+        lang: 'tr-TR',
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['fontname', ['fontname']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ],
+        popover: {
+            image: [
+                ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
+                ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                ['remove', ['removeMedia']]
+            ],
+            link: [
+                ['link', ['linkDialogShow', 'unlink']]
+            ],
+            table: [
+                ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                ['delete', ['deleteRow', 'deleteCol', 'deleteTable']],
+            ],
+            air: [
+                ['color', ['color']],
+                ['font', ['bold', 'underline', 'clear']]
+            ]
+        },
+        callbacks: {
+            onInit: function() {
+                console.log('Summernote editörü başlatıldı');
+            },
+            onChange: function(contents, $editable) {
+                // İçerik değiştiğinde çalışacak fonksiyon
+            }
+        }
+    });
+});
+</script>
 {% endblock %}
 
 

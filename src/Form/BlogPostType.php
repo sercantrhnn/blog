@@ -47,7 +47,11 @@ class BlogPostType extends AbstractType
             ->add('post', TextareaType::class, [
                 'label' => 'İçerik',
                 'required' => false,
-                'attr' => ['rows' => 10, 'placeholder' => 'Blog içeriği']
+                'attr' => [
+                    'rows' => 15, 
+                    'placeholder' => 'Blog içeriği',
+                    'class' => 'summernote-editor'
+                ]
             ])
         ;
     }

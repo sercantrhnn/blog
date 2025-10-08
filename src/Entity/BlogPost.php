@@ -93,4 +93,18 @@ class BlogPost
 
         return $this;
     }
+
+    /**
+     * Güvenli HTML içeriği döndürür
+     */
+    public function getSafeContent(): string
+    {
+        if (!$this->post) {
+            return '';
+        }
+        
+        // Temel HTML tag'lerine izin ver
+        $allowedTags = '<p><br><strong><b><em><i><u><h1><h2><h3><h4><h5><h6><ul><ol><li><a><img><table><tr><td><th><tbody><thead><blockquote><pre><code>';
+        return strip_tags($this->post, $allowedTags);
+    }
 }

@@ -41,7 +41,7 @@
       {% endif %}
 
       <article class="prose prose-lg max-w-none text-slate-700">
-        {{ post.post|raw }}
+        {{ post.safeContent|raw }}
       </article>
 
       {% if related|length > 0 %}
