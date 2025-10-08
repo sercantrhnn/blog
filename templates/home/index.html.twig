@@ -26,7 +26,25 @@
 {% endblock %}
 
 {% block body %}
-<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden" x-data="{ activeSlide: 0 }">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden" x-data="{ 
+  activeSlide: 0, 
+  autoPlayInterval: null,
+  startAutoPlay() {
+    this.stopAutoPlay();
+    this.autoPlayInterval = setInterval(() => { 
+      this.activeSlide = (this.activeSlide + 1) % {{ latestNews|length }} 
+    }, 5000);
+  },
+  stopAutoPlay() {
+    if (this.autoPlayInterval) {
+      clearInterval(this.autoPlayInterval);
+    }
+  },
+  goToSlide(index) {
+    this.activeSlide = index;
+    this.startAutoPlay();
+  }
+}" x-init="startAutoPlay()">
   <header class="flex items-center justify-between whitespace-nowrap border-b border-black/10 px-10 py-4">
     <div class="flex items-center">
       <img src="{{ asset('logo.png') }}" alt="Sanayi Birliği" class="w-48 md:w-64 h-auto max-h-24 md:max-h-32 object-contain shrink-0" />
@@ -41,22 +59,37 @@
   </header>
 
   <main class="w-full grow">
-    <section id="news" class="relative w-full h-[550px] overflow-hidden bg-white" x-init="setInterval(() => { activeSlide = (activeSlide + 1) % {{ latestNews|length }} }, 5000)">
+    <section id="news" class="relative w-full h-[550px] overflow-hidden bg-gray-900">
       {% for n in latestNews %}
-      <a href="{{ path('public_news_show', {id: n.id}) }}" class="absolute inset-0 transition-opacity duration-1000 {% if loop.index0 == 0 %}opacity-100{% else %}opacity-0{% endif %}" x-show="activeSlide === {{ loop.index0 }}" x-transition:enter="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="opacity-100" x-transition:leave-end="opacity-0">
+      <a href="{{ path('public_news_show', {id: n.id}) }}" 
+         class="absolute inset-0 transition-opacity duration-700 ease-in-out"
+         :class="activeSlide === {{ loop.index0 }} ? 'opacity-100 z-10' : 'opacity-0 z-0'"
+         style="pointer-events: {% if loop.index0 == 0 %}auto{% else %}none{% endif %}"
+         :style="activeSlide === {{ loop.index0 }} ? 'pointer-events: auto' : 'pointer-events: none'">
         {% if n.filePath %}
-          <img src="{{ asset(n.filePath) }}" alt="{{ n.title }}" class="h-full w-full object-cover" />
+          <img src="{{ asset(n.filePath) }}" alt="{{ n.title }}" class="h-full w-full object-cover" loading="{% if loop.index0 < 3 %}eager{% else %}lazy{% endif %}" />
         {% else %}
-          <div class="h-full w-full bg-gray-200"></div>
+          <div class="h-full w-full bg-gray-200 flex items-center justify-center">
+            <span class="material-symbols-outlined text-gray-400 text-6xl">image</span>
+          </div>
         {% endif %}
         <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
         <div class="absolute bottom-0 left-0 p-12 text-white">
-          <h1 class="font-display text-5xl font-bold underline decoration-transparent hover:decoration-white">{{ n.title }}</h1>
+          <h1 class="font-display text-5xl font-bold underline decoration-transparent hover:decoration-white transition-all">{{ n.title }}</h1>
         </div>
       </a>
       {% endfor %}
-      <button @click="activeSlide = (activeSlide - 1 + {{ latestNews|length }}) % {{ latestNews|length }}" class="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/20 p-2 text-white backdrop-blur-sm transition hover:bg-white/30"><span class="material-symbols-outlined">chevron_left</span></button>
-      <button @click="activeSlide = (activeSlide + 1) % {{ latestNews|length }}" class="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/20 p-2 text-white backdrop-blur-sm transition hover:bg-white/30"><span class="material-symbols-outlined">chevron_right</span></button>
+      <button @click="goToSlide((activeSlide - 1 + {{ latestNews|length }}) % {{ latestNews|length }})" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 rounded-full bg-white/20 p-2 text-white backdrop-blur-sm transition hover:bg-white/40 hover:scale-110"><span class="material-symbols-outlined">chevron_left</span></button>
+      <button @click="goToSlide((activeSlide + 1) % {{ latestNews|length }})" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 rounded-full bg-white/20 p-2 text-white backdrop-blur-sm transition hover:bg-white/40 hover:scale-110"><span class="material-symbols-outlined">chevron_right</span></button>
+      
+      <!-- Slide Indicators -->
+      <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex space-x-2">
+        {% for n in latestNews %}
+        <button @click="goToSlide({{ loop.index0 }})" 
+                class="w-2 h-2 rounded-full transition-all duration-300"
+                :class="activeSlide === {{ loop.index0 }} ? 'bg-white w-8' : 'bg-white/50 hover:bg-white/75'"></button>
+        {% endfor %}
+      </div>
     </section>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
