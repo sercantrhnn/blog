@@ -9,9 +9,19 @@
         tailwind = window.tailwind || {}; tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#dc2626', 'background-light': '#f6f7f8', 'background-dark': '#101c22' }, fontFamily: { display: ['Newsreader'], sans: ['Noto Sans'] }, borderRadius: { DEFAULT: '0.25rem', lg: '0.5rem', xl: '0.75rem', full: '9999px' } } } };
     </script>
     <style>
-      @keyframes marquee { 0% { transform: translateX(0);} 100% { transform: translateX(-100%);} }
-      .animate-marquee { animation: marquee 40s linear infinite; }
-      .group:hover .animate-marquee { animation-play-state: paused; }
+      @keyframes marquee { 
+        0% { transform: translateX(0);} 
+        100% { transform: translateX(-50%);} 
+      }
+      .animate-marquee { 
+        animation: marquee 30s linear infinite; 
+      }
+      .line-clamp-3 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
     </style>
 {% endblock %}
 
@@ -70,20 +80,66 @@
           </div>
         </div>
 
-        <div id="companies" class="pt-12" x-data="{ companies: [] }" x-init="companies = {{ featuredCompanies|json_encode(constant('JSON_HEX_TAG') b-or constant('JSON_HEX_APOS') b-or constant('JSON_HEX_AMP') b-or constant('JSON_HEX_QUOT'))|raw }}">
+        <div id="companies" class="pt-12">
           <h2 class="font-display text-3xl font-bold px-4 pb-8 text-center">Öne Çıkan Firmalar</h2>
-          <div class="relative w-full overflow-hidden group">
+          <div class="relative w-full overflow-hidden">
             <div class="flex animate-marquee">
+              <!-- İlk set -->
               {% for c in featuredCompanies %}
-              <div class="flex-shrink-0 w-64 mx-4 p-4 flex flex-col items-center justify-center bg-white rounded-xl shadow-lg transition-transform duration-300 hover:scale-105">
-                {% if c.filePath %}<img src="{{ asset(c.filePath) }}" alt="{{ c.name }}" class="h-20 w-20 object-contain mb-4" />{% endif %}
-                <h3 class="text-xl font-bold font-display text-center">{{ c.name }}</h3>
+              <div class="flex-shrink-0 w-96 mx-8 p-8 flex flex-col items-center justify-center bg-transparent rounded-2xl transition-all duration-300 hover:scale-105">
+                <div class="w-full flex flex-col items-center text-center space-y-4">
+                  {% if c.filePath %}
+                    <div class="w-32 h-32 bg-gray-50 rounded-xl flex items-center justify-center p-4 shadow-sm">
+                      <img src="{{ asset(c.filePath) }}" alt="{{ c.name }}" class="max-w-full max-h-full object-contain" />
+                    </div>
+                  {% else %}
+                    <div class="w-32 h-32 bg-gray-100 rounded-xl flex items-center justify-center">
+                      <span class="material-symbols-outlined text-gray-400 text-4xl">business</span>
+                    </div>
+                  {% endif %}
+                  
+                  <div class="space-y-2">
+                    {% if c.category %}
+                      <span class="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-full">{{ c.category }}</span>
+                    {% endif %}
+                    <h3 class="text-2xl font-bold font-display text-gray-900 leading-tight">{{ c.name }}</h3>
+                    {% if c.description %}
+                      <p class="text-base text-gray-600 leading-relaxed line-clamp-3">{{ c.description }}</p>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+              
+              <!-- İkinci set (sürekli döngü için) -->
+              {% for c in featuredCompanies %}
+              <div class="flex-shrink-0 w-96 mx-8 p-8 flex flex-col items-center justify-center bg-transparent rounded-2xl transition-all duration-300 hover:scale-105">
+                <div class="w-full flex flex-col items-center text-center space-y-4">
+                  {% if c.filePath %}
+                    <div class="w-32 h-32 bg-gray-50 rounded-xl flex items-center justify-center p-4 shadow-sm">
+                      <img src="{{ asset(c.filePath) }}" alt="{{ c.name }}" class="max-w-full max-h-full object-contain" />
+                    </div>
+                  {% else %}
+                    <div class="w-32 h-32 bg-gray-100 rounded-xl flex items-center justify-center">
+                      <span class="material-symbols-outlined text-gray-400 text-4xl">business</span>
+                    </div>
+                  {% endif %}
+                  
+                  <div class="space-y-2">
+                    {% if c.category %}
+                      <span class="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-full">{{ c.category }}</span>
+                    {% endif %}
+                    <h3 class="text-2xl font-bold font-display text-gray-900 leading-tight">{{ c.name }}</h3>
+                    {% if c.description %}
+                      <p class="text-base text-gray-600 leading-relaxed line-clamp-3">{{ c.description }}</p>
+                    {% endif %}
+                  </div>
+                </div>
               </div>
               {% endfor %}
             </div>
-            <div class="absolute inset-0 bg-gradient-to-r from-background-light via-transparent to-background-light pointer-events-none"></div>
           </div>
-          <div class="text-center mt-10">
+          <div class="text-center mt-12">
             <a class="bg-primary text-white font-bold py-3 px-8 rounded-full hover:bg-primary/90 transition-colors shadow-lg shadow-primary/30 hover:shadow-primary/40 text-lg" href="{{ path('public_companies_index') }}">Tüm Şirketleri Görüntüle</a>
           </div>
         </div>
